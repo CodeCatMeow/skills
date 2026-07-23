@@ -1,0 +1,39 @@
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Claude Code and local tool state
+.claude/
+.codegraph/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs, caches, and temporary files
+*.log
+*.tmp
+*.bak
+.cache/
+tmp/
+temp/
+
+# Language and build artifacts
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+dist/
+build/
+coverage/
+
+# Generated archives
+*.zip
