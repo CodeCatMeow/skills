@@ -6,6 +6,8 @@ A personal collection of Claude Code skills. The repository follows the layout t
 
 | Skill | Description |
 | --- | --- |
+| [`python-engineering`](skills/python-engineering/SKILL.md) | Provides practical engineering guidance for creating, changing, testing, and organizing Python code. |
+| [`research-documentation`](skills/research-documentation/SKILL.md) | Maintains traceable research status, logs, experiment plans and reports, durable knowledge, decisions, protocols, and paper evidence. |
 | [`uv`](skills/uv/SKILL.md) | Guides Claude Code to use uv for Python projects, scripts, dependencies, environments, and command-line tools. |
 
 ## Import with cc-switch
@@ -28,6 +30,7 @@ skills/<skill-name>/
 ├── SKILL.md
 ├── references/   # optional
 ├── scripts/      # optional
+├── templates/    # optional
 ├── assets/       # optional
 └── examples/     # optional
 ```
