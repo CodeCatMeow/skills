@@ -10,9 +10,11 @@ disable-model-invocation: false
 
 ## Purpose
 
-Maintain a lightweight, durable, searchable, traceable research-documentation system for long-running projects and AI collaboration. The core system uses only Markdown and the filesystem. It does not run experiments, judge novelty, or replace experiment platforms, version control, or specialist publishing tools.
+Maintain a lightweight, durable, searchable, and traceable documentation system for long-running research projects and AI-assisted research collaboration. The core system uses only Markdown and the filesystem. It does not run experiments, judge novelty, or replace experiment platforms, version control, or specialist publishing tools.
 
-The system helps researchers and agents re-enter a project, locate evidence, understand prior decisions, and identify the next action. It is not a way to make a directory look complete.
+The system helps researchers and research agents re-enter a research project, locate evidence, understand prior research decisions, and identify the next research action. It is not a way to make a directory look complete.
+
+This Skill is limited to research-oriented documentation. Do not use it as a general documentation system for ordinary software projects, product development, business operations, or general knowledge management unless the documentation directly supports a research process.
 
 ## Core Rules
 
