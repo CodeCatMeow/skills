@@ -10,6 +10,7 @@
 # Claude Code and local tool state
 .claude/
 .codegraph/
+.agent-runtime/
 
 # Editors and operating systems
 .vscode/
