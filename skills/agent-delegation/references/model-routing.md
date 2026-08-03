@@ -2,7 +2,7 @@
 
 Verification date: **2026-08-02**.
 
-This file stores routing evidence that ages: official model roles, prices/credits, effort options, independent benchmarks, community notes, and the user's local policy. Stable delegation rules live in [`../SKILL.md`](../SKILL.md).
+This file stores routing evidence that ages: official model roles, prices/credits, effort options, independent benchmarks, community notes, and the user's local policy. Stable delegation rules live in [`../SKILL.md`](../SKILL.md). Command forms, permissions, worktrees, serial/parallel writes, and failure recovery live in [`worker-execution.md`](worker-execution.md).
 
 The main agent must not leave the fixed routes in `SKILL.md` because a benchmark looks attractive. When a task is uncovered or hits conflicting routes, read this file, recommend at most two options, and ask the user.
 
@@ -182,6 +182,9 @@ Local experience informing policy:
 
 - Grok may partially ignore earlier `CLAUDE.md` on later turns inside Claude Code, so each Grok prompt must restate critical rules
 - Codex is available locally via plugin + CLI; Grok Build CLI is installed and authenticated for `grok-4.5`
+- Luna max effort is a local cost strategy on a cheap model for clear execution work
+
+Execution mechanisms (headless permissions, output formats, serial writable workers, out-of-repo paths, retries, and Luna fallback after Grok failures) live in [`worker-execution.md`](worker-execution.md), not here.
 
 ## User fixed routes
 

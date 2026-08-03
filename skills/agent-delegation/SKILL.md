@@ -1,6 +1,6 @@
 ---
 name: agent-delegation
-description: Use when routing work among Claude Code subagents, Codex external workers, or Grok Build; choosing Haiku, Sonnet, Luna, Sol, or Grok; writing atomic worker prompts; receiving worker reports; accepting important implementations; maintaining project docs after code changes; running heavy external research or multi-source web checks; or deciding whether a task needs worktree cleanup. Do not use for ordinary single-file edits the main agent can finish alone, or for inventing new model rankings outside the fixed routes.
+description: Use when the user asks for non-trivial engineering work that should be split across workers or subagents — exploring or inventorying a system, multi-file investigation, bug diagnosis or fix, feature implementation, tests, refactors, batch or script jobs, heavy web research, syncing existing docs after accepted changes, reviewing or accepting important results, or choosing among Haiku, Sonnet, Codex (Luna/Sol), or Grok — even if they never say "delegate", "routing", or a model name. Also use when they ask to actively use subagents, parallel agents, or external workers. Do not use for trivial one-step local edits, pure Q&A with no repo work, or inventing new model rankings outside the fixed routes.
 argument-hint: "[task type or worker]"
 user-invocable: true
 disable-model-invocation: false
@@ -10,7 +10,7 @@ disable-model-invocation: false
 
 ## Purpose
 
-Keep Claude Code as the only orchestrator while routing atomic work through fixed workers:
+Keep Claude Code as the only orchestrator while routing atomic work through fixed workers. Ordinary task commands ("examine this system", "fix this bug", "add this feature") count; the user does not need to request delegation. Classify first, dispatch the assigned worker, then accept results:
 
 | Worker | Role |
 | --- | --- |
@@ -23,7 +23,8 @@ Keep Claude Code as the only orchestrator while routing atomic work through fixe
 
 This Skill is a fixed routing and acceptance contract. It is not an agent platform, job queue, or nested multi-agent framework.
 
-For prices, benchmarks, and model notes that go stale, read [model routing](references/model-routing.md). Do not use that reference to invent ad-hoc routes.
+- Stale model prices/benchmarks and route evidence: [model routing](references/model-routing.md). Do not invent ad-hoc routes from that file.
+- Codex/Grok command forms, permissions, output formats, worktrees, serial/parallel writes, out-of-repo paths, retries, and Luna fallback: [worker execution](references/worker-execution.md). **Read it before** calling Codex or Grok, retrying a worker, using a worktree, running parallel writable workers, or modifying paths outside the repo.
 
 ## Non-Negotiable Rules
 
@@ -31,10 +32,32 @@ For prices, benchmarks, and model notes that go stale, read [model routing](refe
 2. Workers must not call subagents, start Claude/Codex/Grok/other agents, nest delegation, expand scope, choose product or research direction, accept important conclusions, or continue to the next stage on their own.
 3. Use fixed routes below. Do not guess which model is smarter, which harness is better, or whether an external agent “might help.” Classify the task, then call the assigned worker.
 4. If no route fits, or two conflicting routes both fit: read `references/model-routing.md`, propose one recommendation and at most one alternative, explain the difference, ask the user with `AskUserQuestion`, and do not start an expensive worker before the user chooses.
-5. Tiny work that needs no isolation may stay on the main agent. This exception does **not** override the fixed Grok Build route for existing project-documentation maintenance.
-6. Important implementation acceptance is never outsourced. Haiku, Sonnet, Luna, Sol, and Grok may collect evidence or run mechanical checks; only the main agent signs off.
+5. **Proactive default:** if the request needs multi-file exploration, non-trivial analysis, implementation, tests, refactor, batch/script work, external research, or existing-doc sync, route it. Do not wait for the user to say "delegate" or name a worker. If the user asks to actively use subagents, parallel agents, or external workers, load this skill and dispatch by fixed route rather than bulk-doing the work alone. Tiny one-step work that needs no isolation may stay on the main agent. That exception does **not** cover multi-file exploration, bug investigation, feature work, or the fixed Grok Build documentation-maintenance route.
+6. Important implementation acceptance is never outsourced. Haiku, Sonnet, Luna, Sol, and Grok may collect evidence or run mechanical checks; only the main agent signs off. Worker claims and exit codes are not completion; require real diffs/artifacts for write tasks.
 7. Existing project documentation that must stay in sync with accepted implementation changes is a separate Grok Build task after the implementation is accepted.
 8. Prefer official plugin/CLI surfaces. Do not add custom wrapper frameworks for sessions, logs, cancel, model, or effort selection.
+9. Writable external workers default to **serial** under Claude Code Auto mode; parallel writes, worktrees, out-of-repo paths, retries, and fallbacks follow [worker execution](references/worker-execution.md). Do not invent looser rules.
+
+## First Move on Ordinary User Commands
+
+When the user issues a normal engineering command without mentioning workers, do this before bulk self-execution:
+
+1. Map the request to one fixed route (or a short sequence of atomic routes).
+2. Keep orchestration, trade-offs, and final acceptance on the main agent.
+3. Read [worker execution](references/worker-execution.md) when the route needs Codex/Grok, a worktree, retry, parallel write, or out-of-repo path; then dispatch with an atomic prompt and report requirements.
+4. Review the worker report and evidence; only then answer the user or continue.
+
+| User says (examples) | Default route |
+| --- | --- |
+| Examine / inventory this system or its features | Haiku explore, then main-agent synthesis |
+| Find where X is handled / list entry points | Haiku |
+| This bug happens when … fix it | Sonnet for multi-file diagnosis if needed; Luna for small clear fix; Grok for non-trivial project fix |
+| Add feature Y / implement this page or API | Grok Build |
+| Clean this CSV / batch transform / make charts | Luna |
+| Is this result strong enough to claim Z? | Sol (candidate only), then main-agent recheck |
+| Compare current docs and community practice for tool T | Grok research route |
+| Actively use subagents / parallel agents | Classify and dispatch fixed routes; do not only self-execute |
+| After the change, update the README/docs | Separate Grok doc task after acceptance |
 
 ## Fixed Routes
 
@@ -86,8 +109,6 @@ Route broad external research to Grok Build when the work needs wide web search,
 
 An atomic task has one clear goal, one coherent change/analysis boundary, and one acceptance set that can be checked once. It is not “one file only.” Implementation plus the tests required for that same goal may travel together. Independent stages must not.
 
-Rules:
-
 1. One goal per delegation.
 2. Do not hand A→B→C independent stages to one worker.
 3. Do not let multiple workers mutate the same deliverable at once.
@@ -97,7 +118,7 @@ Rules:
 
 ## Delegation Prompt
 
-No rigid schema. Include the semantics below when they matter. Natural-language template:
+No rigid schema. Include the semantics below when they matter:
 
 ```text
 Goal:
@@ -143,25 +164,18 @@ Return a worker report as required by the agent-delegation skill.
 
 Reports must let the main agent locate evidence without re-exploring the whole project. They are not final evidence and never replace main-agent acceptance.
 
-### Code or doc changes
-
-Status (done / partial / blocked); files changed; main change per file; commands run; key command results; test/lint/build/link/smoke results; assumptions; open issues; risks and uncovered cases.
-
-### Analysis
-
-Sources used; steps; findings; supporting evidence; facts vs interpretations/candidates; limits; missing info; points the main agent should re-check.
-
-### External research
-
-Query scope; tools or MCPs used and any unavailable ones; main sources with URLs or stable identifiers; supporting evidence; conflicting information; unconfirmed items; verification date; facts vs interpretations; points the main agent must recheck before user-facing conclusions.
-
-### Verification
-
-Targets; methods; commands/checks; passes; failures; unknowns; whether main-agent follow-up is needed.
+| Kind | Required content |
+| --- | --- |
+| Code or doc changes | Status (done / partial / blocked); files changed; main change per file; commands run; key results; test/lint/build/link/smoke; assumptions; open issues; risks |
+| Analysis | Sources; steps; findings; evidence; facts vs interpretations/candidates; limits; missing info; main-agent recheck points |
+| External research | Query scope; tools/MCPs used and gaps; main sources with URLs/ids; supporting evidence; conflicts; unconfirmed items; verification date; facts vs interpretations; recheck points |
+| Verification | Targets; methods; commands/checks; passes; failures; unknowns; whether main-agent follow-up is needed |
 
 ## Main-Agent Acceptance
 
 Do not accept work because a worker said “done.” According to risk: inspect the diff, scope, key logic, verification commands, real test coverage, analysis inputs, and fact vs interpretation.
+
+**Completion is defined by real artifacts, not worker claims.** Natural-language “done”, a normal exit code, or streaming text that says files are being modified does **not** prove completion. For write tasks check: actual diff, target file contents, required verification, and (for headless workers) tool/permission events. No relevant diff when edits were expected → **failed or blocked**; see [worker execution](references/worker-execution.md) for inspect/retry/fallback.
 
 For important implementations that affect core features, data logic, critical config, security, databases, release behavior, experimental results, user conclusions, plan state, or public interfaces, the main agent must personally:
 
@@ -171,24 +185,7 @@ For important implementations that affect core features, data logic, critical co
 4. Run or directly review the critical verification.
 5. Accept, request fixes, or reject.
 
-Never outsource that final acceptance to Sol, Sonnet, Haiku, Grok, or another review agent.
-
-Sol outputs are candidates only. Recheck key evidence before adopting or quoting them to the user.
-
-## Worktrees and Branches
-
-Default: no worktree.
-
-Work in the current tree when the task is read-only, small, non-conflicting, Git state is clear, and recovery is easy.
-
-Prefer a worktree when agents would edit in parallel, compare two implementations, change a large surface, run a throwaway experiment, or need clean discard.
-
-After any worktree or temp branch, finish cleanup in the same round:
-
-- Accept: main-agent acceptance → merge/rebase/cherry-pick to the target branch → confirm target has the change → remove worktree → delete temp branch → confirm no residue.
-- Reject: confirm discard → remove worktree → delete temp branch → confirm no residue.
-
-Do not accept without integrating, keep temp branches after merge, leave worktrees around, pile up unexplained agent branches, or open new branches before old ones are closed. Merge-or-discard-and-clean is part of the delegated work.
+Never outsource that final acceptance to Sol, Sonnet, Haiku, Grok, or another review agent. Sol outputs are candidates only; recheck key evidence before adopting or quoting them.
 
 ## How to Call Workers
 
@@ -201,90 +198,17 @@ Use the Claude Code `Agent` tool with explicit `model`:
 
 Put the atomic prompt and report requirements in the agent prompt. Keep the worker from spawning further agents.
 
-### Codex
+### Codex and Grok
 
-Prefer the installed OpenAI `codex-plugin-cc` companion. Current plugin help shape:
+Before any Codex or Grok call, retry, worktree, parallel writable worker, or out-of-repo write, read [worker execution](references/worker-execution.md). Fixed configs stay:
 
-```text
-task [--background] [--write] [--resume-last|--resume|--fresh] [--model <model|spark>] [--effort <none|minimal|low|medium|high|xhigh>] [prompt]
-```
+| Local policy | Worker | Config |
+| --- | --- | --- |
+| Luna max | Codex | `gpt-5.6-luna` + `xhigh`; `--write` only if files must change |
+| Sol high | Codex | `gpt-5.6-sol` + `high`; no `--write` by default (read-only) |
+| Grok Build | Grok | Current official default coding model; `--no-subagents`; no silent model downgrade |
 
-Fixed configs for this Skill:
-
-| Local policy | Model | Effort | `--write` |
-| --- | --- | --- | --- |
-| Luna max | `gpt-5.6-luna` | `xhigh` (local “max”) | Only when the task truly needs file changes |
-| Sol high | `gpt-5.6-sol` | `high` | Never by default; Sol is read-only |
-
-Sol high (read-only):
-
-```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/codex-companion.mjs" task --model gpt-5.6-sol --effort high "<atomic prompt>"
-```
-
-Luna max when edits are required:
-
-```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/codex-companion.mjs" task --write --model gpt-5.6-luna --effort xhigh "<atomic prompt>"
-```
-
-Luna max when the task is read-only execution or analysis of existing artifacts:
-
-```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/codex-companion.mjs" task --model gpt-5.6-luna --effort xhigh "<atomic prompt>"
-```
-
-Always pass both `--model` and `--effort`. Do not rely on Codex defaults. Do not use Ultra or any mode that spawns nested parallel subagents. Background/status/result/cancel stay on the plugin helpers; do not reimplement them.
-
-Fallback only if the plugin cannot be called reliably. Prefer `codex exec` with `-m` and `-c model_reasoning_effort="..."`. For Sol, keep sandbox read-only; for Luna writes, only widen write access when the atomic task requires it:
-
-```bash
-codex exec -m gpt-5.6-sol -c model_reasoning_effort=\"high\" -s read-only "<atomic prompt>"
-codex exec -m gpt-5.6-luna -c model_reasoning_effort=\"xhigh\" -s workspace-write "<atomic prompt>"
-```
-
-### Grok Build
-
-Confirm the live default coding model first (`grok models`; local default expected `grok-4.5`). Prefer headless single-shot with hard no-subagents.
-
-Ordinary code or documentation tasks that do not need the network:
-
-```bash
-grok \
-  --cwd "$PWD" \
-  --model grok-4.5 \
-  --no-subagents \
-  --no-memory \
-  --disable-web-search \
-  --rules "<task-specific worker rules>" \
-  --output-format json \
-  -p "<atomic prompt>"
-```
-
-Heavy external research tasks: omit `--disable-web-search`, require web search plus any relevant connected MCPs, and keep the task read-only unless the user explicitly asked for writes:
-
-```bash
-grok \
-  --cwd "$PWD" \
-  --model grok-4.5 \
-  --no-subagents \
-  --no-memory \
-  --rules "<research rules: use web search and relevant MCPs; prefer primary sources; cross-check; do not edit project files>" \
-  --output-format json \
-  -p "<atomic research prompt>"
-```
-
-Do not default to unconstrained `--always-approve`. If headless work needs permissions, use an existing safe permission setup or state the prerequisite; do not silently widen global permissions. Put critical project rules in `--rules` and the prompt for every Grok call. Do not assume every MCP is available; unavailable tools must be reported.
-
-## Runtime Scratch
-
-Temporary prompts, worker stdout, job status, temp diffs, and intermediate analysis files may live under:
-
-```text
-.agent-runtime/
-```
-
-Ensure project `.gitignore` includes `.agent-runtime/`. Do not turn it into a database, formal task system, or project docs center. Keep using native Codex/Grok session logs.
+Do not use Ultra or nested-parallel modes. Prefer official plugin/CLI surfaces only.
 
 ## Static Routing Checks
 
@@ -293,23 +217,26 @@ Ensure project `.gitignore` includes `.agent-runtime/`. Do not turn it into a da
 | Quickly inventory backend entry points | Haiku |
 | Analyze ordinary experiment data and check a hypothesis | Sonnet |
 | Clean a CSV, compute stats, make charts | Luna max with `--write` only if files must change |
-| Implement a Vue page and its API calls | Grok Build (`--disable-web-search` if offline is fine) |
+| Implement a Vue page and its API calls | Grok Build |
 | Deep-check whether key results support a candidate explanation | Sol high without `--write` |
-| Survey current community reviews and cross-check official docs for a tool | Grok Build research route with web search and relevant MCPs |
+| Survey current community reviews and cross-check official docs for a tool | Grok Build research route |
 | Accept Grok’s core backend feature | Main agent only |
 | Sync README after an accepted change | Separate Grok doc task; not a main-agent “tiny task” shortcut |
 | Core analysis plus code implementation | Split: Sol analysis (read-only), then Grok implementation |
-| Unclassified new task | Read reference, ask user |
+| Actively use subagents / parallel agents on a multi-file task | Load this skill; dispatch fixed routes instead of bulk self-execution |
+| Unclassified new task | Read `references/model-routing.md`, ask user |
+
+Execution, permission, serial/parallel, and failure-recovery cases: [worker execution](references/worker-execution.md#static-execution-checks).
 
 ## Completion Check
 
-1. Task classified into a fixed route, or user chose after a documented conflict.
+1. Task classified into a fixed route, or user chose after a documented conflict; ordinary commands and “use subagents” counted without waiting for “delegate”.
 2. Prompt is atomic; non-goals and prohibitions are explicit.
-3. Nested delegation is blocked in text and, for Grok, with `--no-subagents`.
+3. Nested delegation blocked; Grok used `--no-subagents` when called.
 4. Worker returned a usable evidence-oriented report.
-5. Important acceptance was done by the main agent.
-6. Affected existing docs were handled as a separate accepted Grok task, or explicitly judged unaffected; not absorbed by the tiny-task exception.
-7. External research used Grok with web search/relevant MCPs when required, stayed read-only by default, and listed sources, conflicts, gaps, and verification date.
+5. Main agent accepted using real artifacts (diff, files, checks), not claims or exit code alone.
+6. Affected existing docs handled as a separate accepted Grok task, or judged unaffected; not absorbed by the tiny-task exception.
+7. External research stayed on the Grok research route (read-only by default) with sources, conflicts, gaps, and verification date when required.
 8. Sol omitted `--write`; Luna used `--write` only when edits were required.
-9. Worktrees/temp branches were integrated or discarded and cleaned.
+9. Codex/Grok calls, retries, worktrees, parallel writes, and out-of-repo paths followed [worker execution](references/worker-execution.md).
 10. No custom orchestration framework was invented for this run.
