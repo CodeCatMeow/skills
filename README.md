@@ -6,7 +6,7 @@ A personal collection of Claude Code skills. The repository follows the layout t
 
 | Skill | Description |
 | --- | --- |
-| [`agent-delegation`](skills/agent-delegation/SKILL.md) | Fixed routing and acceptance rules for Claude Code subagents, Codex workers, and Grok Build. |
+| [`agent-delegation`](skills/agent-delegation/SKILL.md) | Fixed routing and acceptance for Claude Code subagents, Codex workers, and Grok Build on ordinary non-trivial tasks. |
 | [`python-engineering`](skills/python-engineering/SKILL.md) | Provides practical engineering guidance for creating, changing, testing, and organizing Python code. |
 | [`research-documentation`](skills/research-documentation/SKILL.md) | Maintains traceable research status, logs, experiment plans and reports, durable knowledge, decisions, protocols, and paper evidence. |
 | [`software-docs`](skills/software-docs/SKILL.md) | Maintains human-first software documentation and ADRs for general software projects. Do not use for research documentation. |
