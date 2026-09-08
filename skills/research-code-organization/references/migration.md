@@ -1,72 +1,25 @@
-# Migrating Messy Research Repos
+# Migrating a Research Script Graveyard
 
-Typical start:
+Use this workflow when several launchers or model copies overlap enough that nobody
+can tell which path is authoritative.
 
-```text
-train.py / train_a.py / train_b_fix.py / train_final.py
-model.py / model_v2.py / model_new.py
-```
+1. Inventory training entrypoints, shell wrappers, notebooks, and configuration.
+2. Compare behavior rather than filenames. Classify each difference as:
+   - a parameter or runtime option;
+   - reusable model, loss, data, or evaluation logic;
+   - training control flow; or
+   - a separate lifecycle such as evaluation or export.
+3. Identify the most complete shared path and establish one stable training
+   entrypoint around it.
+4. Move parameters into the existing configuration system, reusable differences
+   into domain modules, and control-flow differences into selectable strategies.
+5. Record equivalent commands for important prior runs and verify their behavior.
+6. Retire redundant launchers and version-named modules once parity is established.
 
-Do not begin by deleting everything or forcing a template.
+Migrate one coherent slice at a time so that results remain attributable and review
+stays practical. Preserve an old path only when it is still needed for an active
+comparison or reproducibility requirement.
 
-## Flow
-
-1. **Inventory** `train*.py`, shell wrappers, training notebooks, make targets.
-2. **Diff behavior**, not filenames. Classify each difference:
-
-   | Kind | Examples |
-   | --- | --- |
-   | Parameter | lr, batch size, seed |
-   | Config surface | different yaml/argparse defaults |
-   | Implementation | different model/loss/data path |
-   | Lifecycle | train vs eval vs export |
-
-3. **Find shared core** (data, model build, loop, eval hooks, checkpointing).
-4. **Establish one stable train entry** (most complete current file or thin new
-   `train.py`). Do not delete other entrypoints yet.
-5. **Parameters → configuration**; document old → new commands.
-6. **Reusable code diffs → components** + config selection (factory is enough).
-7. **True control-flow diffs → strategies**; `train.py` stays the chooser.
-8. **Verify expressibility** of baseline and important ablations.
-9. **Delete** redundant launchers and dead `model_vN.py` after parity. Use Git;
-   do not keep `train_final_old.py` "just in case" without a reproduction need.
-10. **Stop regression:** README note to use `train.py` + configs; refuse new
-    `train_*.py` unless lifecycle is truly new. No scoring services or heavy process.
-
-## Micro-example
-
-```text
-# Before
-train.py, train_focal.py, train_no_aux.py, model.py, model_attn.py
-
-# After
-train.py
-configs/experiment/{baseline,focal,no_aux,attn}.yaml
-models/{baseline.py,components/attention.py}
-losses/{ce.py,focal.py}
-```
-
-Order: shared loop → selectable loss → aux toggle → attention component →
-replace scripts with config commands → delete after verification.
-
-## Hydra during migration
-
-Suggest Hydra only when dominant pain is composition (small deltas, multiplying
-combinations, diverging YAML/scripts, need for overrides/multirun). **Ask first.**
-
-If a Hydra skill is available, hand off syntax there; this skill still decides
-component vs experiment vs entrypoint. If the user declines, continue with the
-existing config system.
-
-Skip Hydra when the project is tiny, ending soon, already has a mature system,
-or the user refuses.
-
-## Anti-patterns
-
-| Anti-pattern | Better |
-| --- | --- |
-| Big-bang rewrite before inventory | stage by slice |
-| Delete scripts before parity | map old → new commands first |
-| Keep all old scripts forever after parity | remove once expressible |
-| Introduce Lightning/DVC/CI "while cleaning" | only on request |
-| Template overlay without command mapping | preserve reproducibility |
+Hydra is an optional follow-up when the dominant problem is composition across many
+small configuration deltas. Confirm that migration cost is justified before adding
+it; the same routing works with a simpler existing configuration system.
