@@ -7,6 +7,7 @@ A personal collection of Claude Code skills. The repository follows the layout t
 | Skill | Description |
 | --- | --- |
 | [`agent-toolkit`](skills/agent-toolkit/SKILL.md) | Explicit-only use of Claude Code native/named agents and optional Grok Build CLI. |
+| [`gflow-ops`](skills/gflow-ops/SKILL.md) | Local-first gflow scheduler inspection, job operations, logs, and safe validation through MCP or CLI. |
 | [`hydra-configuration`](skills/hydra-configuration/SKILL.md) | Correct Hydra composition: Config Groups, Defaults List, experiment deltas, overrides, multirun, outputs, instantiate, and progressive migration. |
 | [`python-engineering`](skills/python-engineering/SKILL.md) | Concise Python guardrails: repository fit, Google style, cohesive boundaries, risk-matched evidence, and uv. |
 | [`research-code-organization`](skills/research-code-organization/SKILL.md) | Explicit-only cleanup guidance for duplicated experiment launchers, permanent flags, and established research script sprawl. |

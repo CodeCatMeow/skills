@@ -24,10 +24,7 @@ Desktop.ini
 *.tmp
 *.bak
 .cache/
-/buffer/
-/python-engineering-workspace/
-tmp/
-temp/
+/\.tmp/
 
 # Language and build artifacts
 __pycache__/
