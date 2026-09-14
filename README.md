@@ -1,12 +1,13 @@
 # Skills
 
-A personal collection of Claude Code skills. The repository follows the layout that [cc-switch](https://github.com/farion1231/cc-switch) expects for repository imports.
+A personal collection of Claude Code and Codex skills. The repository follows the layout that [cc-switch](https://github.com/farion1231/cc-switch) expects for repository imports.
 
 ## Included skills
 
 | Skill | Description |
 | --- | --- |
 | [`agent-toolkit`](skills/agent-toolkit/SKILL.md) | Explicit-only use of Claude Code native/named agents and optional Grok Build CLI. |
+| [`cross-session-messaging`](skills/cross-session-messaging/SKILL.md) | Sends messages to existing Codex threads through native tools, with a codex queue fallback for environments such as SSH. |
 | [`gflow-ops`](skills/gflow-ops/SKILL.md) | Local-first gflow scheduler inspection, job operations, logs, and safe validation through MCP or CLI. |
 | [`hydra-configuration`](skills/hydra-configuration/SKILL.md) | Correct Hydra composition: Config Groups, Defaults List, experiment deltas, overrides, multirun, outputs, instantiate, and progressive migration. |
 | [`python-engineering`](skills/python-engineering/SKILL.md) | Concise Python guardrails: repository fit, Google style, cohesive boundaries, risk-matched evidence, and uv. |
