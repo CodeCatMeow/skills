@@ -1,10 +1,9 @@
 ---
 name: software-docs
 description: >
-  Maintain long-lived software documentation when the user asks for documentation
-  or when a change would make existing README, API, configuration, deployment, or
-  operational guidance wrong. Routine implementation work whose documented
-  behavior remains correct does not need this skill.
+  Create, review, or substantially revise software usage guides, API documentation,
+  or design documents when the user requests that deliverable. Routine code changes
+  and research notes do not trigger this skill.
 user-invocable: true
 disable-model-invocation: false
 ---
@@ -13,19 +12,14 @@ disable-model-invocation: false
 
 Keep durable documentation correct at the lowest maintenance cost.
 
-## Decide the scope
+## Scope
 
-Documentation work is useful when:
+Work on the software documentation requested by the user. This includes usage
+guides for research code; research questions, experiment evidence, and results
+belong in research notes.
 
-- the user requests a document or documentation update;
-- user-facing behavior, a public interface, configuration, commands, deployment,
-  or operations changed;
-- an existing long-lived document would otherwise mislead its readers; or
-- the project already records a consequential design decision and this change
-  alters that decision.
-
-A bug fix, test change, or internal refactor normally requires documentation only
-when it changes one of those durable facts.
+Correcting a known stale statement during a code change can stay part of that edit;
+it does not require loading this skill or starting a broader documentation review.
 
 ## Update the closest document
 

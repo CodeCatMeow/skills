@@ -1,13 +1,9 @@
 ---
 name: hydra-configuration
 description: >
-  Use Hydra correctly for Python config composition, Config Groups, Defaults
-  List, experiment configs, CLI overrides, multirun, output directories, and
-  hydra.utils.instantiate. Use when a project already uses Hydra, when creating
-  or editing Hydra YAML, when migrating argparse/flat YAML to Hydra, or when
-  debugging composition with --cfg/--info. Do not use for research direction,
-  result analysis, code-structure governance without Hydra, Lightning/W&B/Optuna
-  tutorials, or general non-Hydra Python work.
+  Create, edit, or debug Hydra configuration, composition, overrides, multirun,
+  output paths, and instantiate, or carry out a requested migration to Hydra.
+  The task must involve Hydra itself; its presence in the repository is not enough.
 ---
 
 # Hydra Configuration
@@ -75,7 +71,7 @@ Details: [composition.md](references/composition.md).
 
 ## Experiment configs
 
-**Use when:** Encoding a named ablation or repeated run.
+**Use when:** Encoding a named ablation or repeated run in Hydra configuration.
 
 ```yaml
 # configs/experiment/no_aux.yaml
@@ -109,7 +105,7 @@ Details: [experiment-configs.md](references/experiment-configs.md).
 
 ## CLI overrides vs named experiments
 
-**Use when:** Choosing how to express a change.
+**Use when:** Choosing how to express a change in Hydra configuration.
 
 | Need | Prefer |
 | --- | --- |
@@ -122,7 +118,7 @@ Do not rely on shell history as the only record of important experiments.
 
 ## Multirun
 
-**Use when:** Sweeping intentional config axes.
+**Use when:** Constructing or debugging Hydra parameter sweeps.
 
 ```bash
 # primary defaults has no experiment group
@@ -167,7 +163,7 @@ Details: [runtime-and-output.md](references/runtime-and-output.md).
 
 ## `hydra.utils.instantiate`
 
-**Use when:** Config should choose among implementations of a stable interface.
+**Use when:** Using Hydra to select implementations of a stable interface.
 
 ```yaml
 model:
@@ -189,7 +185,8 @@ model = instantiate(cfg.model)
 
 ## Progressive migration
 
-**Use when:** Moving from argparse / flat YAML / script copies.
+**Use when:** Migrating argparse / flat YAML / script copies to Hydra as part of
+the requested task.
 
 1. Stabilize one entrypoint; collect real variation axes.
 2. Minimal primary `config.yaml` + groups only for axes that vary.

@@ -7,13 +7,13 @@ A personal collection of Claude Code and Codex skills. The repository follows th
 | Skill | Description |
 | --- | --- |
 | [`agent-toolkit`](skills/agent-toolkit/SKILL.md) | Explicit-only use of Claude Code native/named agents and optional Grok Build CLI. |
-| [`cross-session-messaging`](skills/cross-session-messaging/SKILL.md) | Sends messages to existing Codex threads through native tools, with a codex queue fallback for environments such as SSH. |
+| [`cross-session-messaging`](skills/cross-session-messaging/SKILL.md) | Sends messages to existing Codex threads only at the user's explicit request; prefers native tools with a codex queue fallback for environments such as SSH. |
 | [`gflow-ops`](skills/gflow-ops/SKILL.md) | Local-first gflow scheduler inspection, job operations, logs, and safe validation through MCP or CLI. |
-| [`hydra-configuration`](skills/hydra-configuration/SKILL.md) | Correct Hydra composition: Config Groups, Defaults List, experiment deltas, overrides, multirun, outputs, instantiate, and progressive migration. |
+| [`hydra-configuration`](skills/hydra-configuration/SKILL.md) | Guides tasks involving Hydra configuration and runtime behavior, including requested migrations; a repository using Hydra alone does not trigger it. |
 | [`python-engineering`](skills/python-engineering/SKILL.md) | Concise Python guardrails: repository fit, Google style, cohesive boundaries, risk-matched evidence, and uv. |
 | [`research-code-organization`](skills/research-code-organization/SKILL.md) | Explicit-only cleanup guidance for duplicated experiment launchers, permanent flags, and established research script sprawl. |
 | [`research-documentation`](skills/research-documentation/SKILL.md) | Records only decision-relevant research context; Markdown for daily notes and Quarto for executable or formal reports. |
-| [`software-docs`](skills/software-docs/SKILL.md) | Makes the smallest necessary update when long-lived software documentation would otherwise be wrong. |
+| [`software-docs`](skills/software-docs/SKILL.md) | Creates, reviews, or substantially revises software usage guides, API documentation, and design documents requested by the user. |
 | [`uv`](skills/uv/SKILL.md) | Guides Claude Code to use uv for Python projects, scripts, dependencies, environments, and command-line tools. |
 
 ## Import with cc-switch

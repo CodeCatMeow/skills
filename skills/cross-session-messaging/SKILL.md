@@ -1,13 +1,18 @@
 ---
 name: cross-session-messaging
 description: >-
-  Send messages to other existing Codex sessions or threads when asked to contact,
-  notify, coordinate with, or pass information to another Codex conversation.
+  Send messages to other existing Codex sessions or threads only when the user
+  explicitly asks to contact, notify, coordinate with, or pass information to
+  another Codex conversation. Do not initiate cross-session messaging proactively.
   Prefer native thread tools; fall back to codex queue when those tools are
   unavailable, including in SSH remote sessions.
 ---
 
 # Cross-session messaging
+
+Use this workflow only for communication explicitly requested by the user. Keep
+recipients and message content within that request; do not independently contact
+other threads merely because coordination might be useful.
 
 1. Resolve the target using available Codex thread-list or read tools when needed.
    Prefer a thread UUID. The CLI also accepts an exact session name; ask for the
