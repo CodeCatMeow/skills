@@ -25,63 +25,82 @@ is unclear, ask a focused question rather than expanding to the entire project.
   necessary comparisons. Use an incremental report when the recipient already has
   the earlier material; identify that material and explain additions and corrections.
 
-Treat unknown recipient context as absent. Local paths and experiment IDs support
-traceability but do not substitute for evidence the external reader needs to see.
+Treat unknown recipient context as absent. Include the evidence needed to assess
+claims directly in the report; the external reader cannot access the local project.
 
-## Deliver a few directly usable files
+## Deliver a self-contained report
 
-Prefer one or two upload files, chosen by content rather than experiment count.
+Default to one self-contained TXT or compact PDF containing the analysis and
+necessary tables or figures. Choose by content rather than experiment count.
 
-- Use `analysis.txt` for text and small numerical comparisons. Write plain text
-  with simple section labels, without relying on Markdown rendering. A small
-  text-only update can be delivered directly in chat if the user prefers.
-- Use one compact `report.pdf` when text, plots, images, or many experimental
-  comparisons are easier to review together. Combine relevant experiments in the
-  same document. Integrate analysis beside its evidence rather than duplicating
-  the report in TXT and PDF.
-- Add a consolidated `metrics.csv` only when detailed numerical reanalysis needs
-  it. Combine compatible experiment records using experiment and condition columns;
-  do not create one CSV per experiment. Explain units, fields, and missing values
-  briefly in the main report. Large time series belong here rather than in pages
-  of PDF tables when the actual values are needed.
+- Use `analysis.txt` for plain text and tables with simple section labels. A small
+  text-only update can stay in chat if the user prefers.
+- Use `report.pdf` for integrated text, tables, plots, and images. Combine relevant
+  experiments and place analysis beside its evidence, without duplicating a TXT report.
 
-Deliver TXT/PDF and any necessary CSV directly, without a ZIP or package hierarchy.
-For PDF, use readable, selectable text and tables, labeled figures, and compact
-layout. Omit covers, contents pages, and decorative filler. Compactness means less
-repetition and wasted space, not tiny labels or illegible plots.
+Deliver files directly, without a ZIP or package hierarchy.
+For PDF, use selectable text and tables, labeled figures, and compact layout without
+covers, contents pages, or decorative filler. Keep labels and plots readable.
+
+## Organize data before choosing its format
+
+State shared settings, units, and field meanings once per relevant group. For
+comparable results, put metrics such as mAP and R1 in adjacent columns of the same
+row, rather than repeating experiment metadata for each metric. Retain the seed,
+stage, dataset, or condition distinctions needed to interpret the comparison.
+
+Choose representations by analytical role. When interpretation depends on trends,
+distributions, stage relationships, or visual examples, include the relevant plots
+or images. Preserve that visual structure rather than replacing it with long
+numeric sequences or summary values alone. Pair visuals with precise key values
+and short analysis: visual structure, numerical precision, and interpretation are
+complementary, not redundant. Representations of the same data are not independent
+experimental confirmations.
+
+For scalar comparisons, prefer compact text tables; use grouped text or embedded
+TOON inside the TXT when it reduces repetition without obscuring meaning. Changing
+format alone is not data reduction.
+
+Attach a consolidated CSV only when the user explicitly requests programmatic
+reanalysis of substantial row-level data. Include the required records and fields,
+not a flattened dump of every source. Otherwise, keep discussion-relevant values
+and important anomalies in the report.
 
 ## Preserve evidence, compress repetition
 
-Keep original data, configurations, logs, and images intact in their existing
-locations. Select the evidence relevant to the requested discussion rather than
-re-exporting the entire archive. Process large source files programmatically;
-inspect relevant records and computed results instead of dumping full JSON or logs
-into the conversation.
+Keep original data, configurations, logs, and images intact. Select evidence for
+the requested discussion rather than re-exporting the archive. Process large files
+programmatically and inspect relevant results instead of dumping full JSON or logs
+into context.
 
-Separate observations, interpretations, and supported conclusions. Connect key
-claims to experiment IDs, relevant configuration differences, and supplied data
-or figures. Preserve numerical precision in exported data and explain any
-filtering or aggregation. Retain relevant failed runs, anomalies, counterexamples,
-and uncertainty; mark unavailable evidence explicitly.
+Keep detailed provenance in existing local project records. Omit local path lists,
+file hashes, and internal ID dictionaries from outgoing material unless requested.
+Use descriptive experiment labels, relevant configuration differences, and actual
+evidence rather than references the recipient cannot open.
 
-Analyze important patterns and competing explanations in enough depth for the
-external reader to challenge them. Include the specific questions that remain
-open. Present evidence independently of the proposed explanation so cross-checking
-does not depend on accepting that explanation first.
+Separate observations, interpretations, and supported conclusions. Tie key claims
+to the experiments and tables or figures supplied in the report. Preserve numerical
+precision and explain any filtering or aggregation. Retain relevant failed runs,
+anomalies, counterexamples, and uncertainty; mark unavailable evidence explicitly.
 
-State shared background and settings once. Let a table or figure carry its data;
-use prose for implications rather than repeating every value. Choose length by
-the evidence and questions, with no minimum word, token, or page count. Keep the
-same factual material when preparing the report for multiple external models.
+Analyze important patterns and competing explanations deeply enough to challenge
+them, and identify open questions. Present evidence independently of the proposed
+explanation so other models can assess it on its merits.
+
+State background once. Remove repeated exposition and point-by-point narration
+that adds no understanding, while retaining complementary visual and numerical
+evidence. Let the evidence and questions determine length, with no minimum word,
+token, or page count. Give different external models the same factual material.
 
 ## Check and hand off
 
-Check numerical agreement with sources, evidence references, important omissions,
-and repeated content. For PDFs, inspect both text extraction and rendered pages
-for reading order, clipped tables, and unreadable labels.
+Check numerical agreement with sources, evidence references, and important omissions.
+Inspect the actual delivery content for repeated metadata, inaccessible references,
+and unhelpful duplication; a small file count does not establish compactness.
+For PDFs, inspect text extraction and rendered pages for reading order, clipped
+tables, and unreadable labels.
 
-Finish with the files to upload, their sizes, the covered experiment and data
-counts, and any important evidence not included. State the source-data size when
-readily available, and label token estimates as estimates. Leave delivery to the
-user; report preparation does not authorize contacting external models or running
-additional experiments.
+In the delivery reply, list upload files, sizes, experiment and data counts, and
+important evidence not included. Give source-data size when readily available;
+label token estimates. Leave delivery to the user; this workflow does not authorize
+contacting external models or running additional experiments.
