@@ -41,6 +41,10 @@ necessary tables or figures. Choose by content rather than experiment count.
 Deliver files directly, without a ZIP or package hierarchy.
 For PDF, use selectable text and tables, labeled figures, and compact layout without
 covers, contents pages, or decorative filler. Keep labels and plots readable.
+Use continuous-flow pagination so sections, tables, and figures can share pages;
+page breaks should serve readability rather than separate every section or experiment.
+Reduce wasted spacing and improve placement before shrinking text or figures.
+Preserve evidence and legibility when reducing page count.
 
 ## Organize data before choosing its format
 
@@ -98,7 +102,10 @@ Check numerical agreement with sources, evidence references, and important omiss
 Inspect the actual delivery content for repeated metadata, inaccessible references,
 and unhelpful duplication; a small file count does not establish compactness.
 For PDFs, inspect text extraction and rendered pages for reading order, clipped
-tables, and unreadable labels.
+tables, and unreadable labels. Review the page overview for avoidable large gaps
+or unnecessary page breaks and reflow content where useful. Natural final-page
+whitespace and space needed to keep figures readable are acceptable; filling every
+page is not a goal.
 
 In the delivery reply, list upload files, sizes, experiment and data counts, and
 important evidence not included. Give source-data size when readily available;
