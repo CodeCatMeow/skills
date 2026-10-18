@@ -33,11 +33,13 @@ claims directly in the report; the external reader cannot access the local proje
 Default to one self-contained TXT or compact PDF containing the analysis and
 necessary tables or figures. Choose by content rather than experiment count.
 
-- Use `analysis.txt` for plain text and tables with simple section labels. A small
+- Use TXT for plain text and tables with simple section labels. A small
   text-only update can stay in chat if the user prefers.
-- Use `report.pdf` for integrated text, tables, plots, and images. Combine relevant
+- Use PDF for integrated text, tables, plots, and images. Combine relevant
   experiments and place analysis beside its evidence, without duplicating a TXT report.
 
+Use concise filenames reflecting the report's topic and experiment scope. Distinguish
+successive reports with a date or revision when needed; honor user-specified filenames.
 Deliver files directly, without a ZIP or package hierarchy.
 For PDF, use selectable text and tables, labeled figures, and compact layout without
 covers, contents pages, or decorative filler. Keep labels and plots readable.
