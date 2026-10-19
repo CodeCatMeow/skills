@@ -26,17 +26,22 @@ is unclear, ask a focused question rather than expanding to the entire project.
   the earlier material; identify that material and explain additions and corrections.
 
 Treat unknown recipient context as absent. Include the evidence needed to assess
-claims directly in the report; the external reader cannot access the local project.
+claims in the supplied materials; the external reader cannot access the local project.
 
-## Deliver a self-contained report
+## Deliver self-contained materials
 
-Default to one self-contained TXT or compact PDF containing the analysis and
-necessary tables or figures. Choose by content rather than experiment count.
+Default to one TXT, adding one compact PDF when visual evidence is useful. The
+files should be self-contained together, not each repeat the complete report.
 
-- Use TXT for plain text and tables with simple section labels. A small
-  text-only update can stay in chat if the user prefers.
-- Use PDF for integrated text, tables, plots, and images. Combine relevant
-  experiments and place analysis beside its evidence, without duplicating a TXT report.
+- Put background, configuration details, numerical tables, analysis, and discussion
+  questions in TXT, using plain text and simple section labels.
+- Put curves, distributions, heatmaps, and visual examples in PDF, with necessary
+  labels and concise captions. Match figure numbers between TXT and PDF. Keep long
+  prose and large numerical tables in TXT; small tables or key values that clarify
+  a figure can remain beside it.
+
+A short report whose text and visuals are tightly integrated may use a single PDF.
+A small text-only update can stay in chat if the user prefers.
 
 Use concise filenames reflecting the report's topic and experiment scope. Distinguish
 successive reports with a date or revision when needed; honor user-specified filenames.
@@ -101,6 +106,8 @@ token, or page count. Give different external models the same factual material.
 ## Check and hand off
 
 Check numerical agreement with sources, evidence references, and important omissions.
+When delivering TXT and PDF together, verify that figure references match and that
+the files jointly provide the context and evidence needed for the requested discussion.
 Inspect the actual delivery content for repeated metadata, inaccessible references,
 and unhelpful duplication; a small file count does not establish compactness.
 For PDFs, inspect text extraction and rendered pages for reading order, clipped
