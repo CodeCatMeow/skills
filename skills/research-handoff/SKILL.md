@@ -15,8 +15,8 @@ code changes, and ordinary result discussions do not authorize report generation
 
 ## Follow the requested scope
 
-Use the experiments and discussion questions identified by the user. If the scope
-is unclear, ask a focused question rather than expanding to the entire project.
+Use the experiments and analytical focus specified by the user. If the scope is
+unclear, clarify it with the user before drafting rather than expanding to the entire project.
 
 - For a first introduction, supply the research goal, relevant method, evaluation
   setup, and prior findings needed to understand the requested scope. Include
@@ -33,8 +33,8 @@ claims in the supplied materials; the external reader cannot access the local pr
 Default to one TXT, adding one compact PDF when visual evidence is useful. The
 files should be self-contained together, not each repeat the complete report.
 
-- Put background, configuration details, numerical tables, analysis, and discussion
-  questions in TXT, using plain text and simple section labels.
+- Put background, configuration details, numerical tables, analysis, conclusions,
+  and limitations in TXT, using plain text and simple section labels.
 - Put curves, distributions, heatmaps, and visual examples in PDF, with necessary
   labels and concise captions. Match figure numbers between TXT and PDF. Keep long
   prose and large numerical tables in TXT; small tables or key values that clarify
@@ -94,13 +94,14 @@ to the experiments and tables or figures supplied in the report. Preserve numeri
 precision and explain any filtering or aggregation. Retain relevant failed runs,
 anomalies, counterexamples, and uncertainty; mark unavailable evidence explicitly.
 
-Analyze important patterns and competing explanations deeply enough to challenge
-them, and identify open questions. Present evidence independently of the proposed
-explanation so other models can assess it on its merits.
+Analyze important patterns and competing explanations in depth. Reasoned conjectures
+are welcome when clearly labeled. State unresolved issues as limitations or unverified
+hypotheses; include questions or requests for advice to the recipient only when the
+user asks for them. Keep evidence distinct from interpretation for independent assessment.
 
 State background once. Remove repeated exposition and point-by-point narration
 that adds no understanding, while retaining complementary visual and numerical
-evidence. Let the evidence and questions determine length, with no minimum word,
+evidence. Let the evidence and requested scope determine length, with no minimum word,
 token, or page count. Give different external models the same factual material.
 
 ## Check and hand off
